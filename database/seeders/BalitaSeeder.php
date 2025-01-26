@@ -54,7 +54,7 @@ class BalitaSeeder extends Seeder
             'tanggal_lahir' => '2024-11-22',
             'jenis_kelamin' => 'P',
             'lingkungan' => '4',
-            'is_stunting' => 'Perlu Diverifikasi'
+            'is_stunting' => 'Perlu Perhatian'
         ],[
             'nama_balita' => 'Arif',
             'nama_ortu' => 'Rudi',

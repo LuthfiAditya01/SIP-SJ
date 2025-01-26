@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->enum('role', ['Admin', 'Bidan', 'Kader']);
+            // $table->enum('role', ['Admin', 'Bidan', 'Kader']);
             $table->enum('lingkungan',['1', '2', '3', '4', '5'])->nullable();
         });
     }

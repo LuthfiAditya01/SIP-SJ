@@ -76,4 +76,24 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+    protected function redirectTo()
+    {
+        try {
+            $user = auth()->user();
+            if ($user->hasRole('admin')) {
+                return '/admin/dashboard';
+            } elseif ($user->hasRole('bidan')) {
+                return '/bidan/dashboard';
+            } elseif ($user->hasRole('kader')) {
+                return '/kader/dashboard';
+            }
+            
+            return '/home';
+            
+        } catch (\Exception $e) {
+            \Log::error('Registration redirect error: ' . $e->getMessage());
+            return '/home';
+        }
+    }
 }

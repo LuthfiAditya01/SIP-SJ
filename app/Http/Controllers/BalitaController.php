@@ -10,6 +10,11 @@ class BalitaController extends Controller
 {
     public $userModel;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function home(){
         $data = DB::table('data_balita')
         ->select('lingkungan', 'is_stunting', DB::raw('COUNT(*) as jumlah'))

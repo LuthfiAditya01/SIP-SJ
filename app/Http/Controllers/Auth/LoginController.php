@@ -22,13 +22,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -36,15 +29,29 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
     }
 
     protected function authenticated(Request $request, $user)
     {
-        if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
+        try {
+            if ($user->hasRole('admin')) {
+                return redirect('/admin/dashboard');
+            } elseif ($user->hasRole('bidan')) {
+                return redirect('/bidan/dashboard');
+            } elseif ($user->hasRole('kader')) {
+                return redirect('/kader/dashboard');
+            }
+            
+            // Jika tidak punya role, logout dan tampilkan pesan
+            auth()->logout();
+            return redirect()->route('login')
+                ->with('error', 'Akun anda belum memiliki role. Silahkan hubungi admin.');
+            
+        } catch (\Exception $e) {
+            \Log::error('Authentication error: ' . $e->getMessage());
+            auth()->logout();
+            return redirect()->route('login')
+                ->with('error', 'Terjadi kesalahan saat login');
         }
-
-        return redirect()->route('user.dashboard');
     }
 }

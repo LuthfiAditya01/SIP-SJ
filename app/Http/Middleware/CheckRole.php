@@ -15,20 +15,28 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
+        // Validasi user login
         if (!$request->user()) {
-            abort(403, 'Unauthorized action.');
+            return redirect()->route('login');  // Lebih baik redirect ke login daripada abort 403
         }
 
+        // Jika tidak ada roles yang diberikan
         if (empty($roles)) {
+            \Log::warning('No roles specified in middleware');  // Tambah logging
             return $next($request);
         }
 
-        foreach($roles as $role) {
-            if($request->user()->hasRole($role)) {
-                return $next($request);
+        try {
+            foreach($roles as $role) {
+                if($request->user()->hasRole($role)) {
+                    return $next($request);
+                }
             }
+        } catch (\Exception $e) {
+            \Log::error('Role checking error: ' . $e->getMessage());  // Tambah error logging
+            abort(500, 'Internal server error');
         }
 
-        abort(403, 'Unauthorized action.');
+        return redirect()->back()->with('error', 'Unauthorized access');  // Lebih user friendly
     }
 }

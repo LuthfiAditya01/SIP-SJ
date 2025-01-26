@@ -21,7 +21,26 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                try {
+                    $user = Auth::user();
+                    if ($user->hasRole('admin')) {
+                        return redirect('/admin/dashboard');
+                    } elseif ($user->hasRole('bidan')) {
+                        return redirect('/bidan/dashboard');
+                    } elseif ($user->hasRole('kader')) {
+                        return redirect('/kader/dashboard');
+                    }
+                    
+                    auth()->logout();
+                    return redirect()->route('login')
+                        ->with('error', 'Akun anda belum memiliki role');
+                    
+                } catch (\Exception $e) {
+                    \Log::error('Redirect error: ' . $e->getMessage());
+                    auth()->logout();
+                    return redirect()->route('login')
+                        ->with('error', 'Terjadi kesalahan');
+                }
             }
         }
 

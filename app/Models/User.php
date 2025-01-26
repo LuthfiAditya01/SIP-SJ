@@ -43,6 +43,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::created(function ($user) {
+            \Log::info('New user created: ' . $user->id);
+        });
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -50,6 +59,23 @@ class User extends Authenticatable
 
     public function hasRole($role)
     {
-        return $this->roles()->where('name', $role)->exists();
+        try {
+            // Validasi input
+            if (empty($role)) {
+                \Log::warning('Empty role parameter passed to hasRole method');
+                return false;
+            }
+
+            // Pastikan relasi roles sudah dimuat
+            if (!$this->relationLoaded('roles')) {
+                $this->load('roles');
+            }
+
+            return $this->roles()->where('name', $role)->exists();
+            
+        } catch (\Exception $e) {
+            \Log::error('Error in hasRole method: ' . $e->getMessage());
+            return false;
+        }
     }
 }

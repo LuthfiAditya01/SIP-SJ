@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Bidan Dashboard</h1>
-    @include('partials.dashboard-stats')
+    <h1>User Dashboard</h1>
+    <!-- Konten dashboard user -->
 </div>
 @endsection 

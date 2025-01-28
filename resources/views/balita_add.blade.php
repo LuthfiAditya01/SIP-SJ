@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard | Bidan</title>
+    <title>Tambah</title>
     <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
     <header>
@@ -72,104 +72,72 @@
             </div>
         </nav>
     </header>
-    
-    <h2 class="mx-8 mt-4 text-2xl lg:mx-24 font-PlusJakartaSans">Selamat Datang,</h2>
-        <h1 class="mx-8 mt-2 text-4xl lg:mx-24 font-PlusJakartaSans font-bold">Bidan Darlina</h1>
-    
-        <div class="flex mx-4 mt-2 lg:mx-8 lg:mt-4 justify-evenly items-center flex-wrap font-PlusJakartaSans ">
-            <div class="bg-[#FFEAA7] mt-4 px-10 py-5 rounded-xl">
-                <div class="flex flex-row items-center">
-                    <img src="{{asset('baby.png')}}" alt="" class="rounded-full w-20">
-                    <h2 class="flex text-3xl font-medium ml-4">Balita Sehat</h2>
-                </div>
-                <h4 class="text-4xl ml-24 font-bold">{{$balitaSehat}} Balita</h4>
-            </div>
-    
-            <div class="bg-[#FFEAA7] mt-4 px-10 py-5 rounded-xl">
-                <div class="flex flex-row items-center">
-                    <img src="{{asset('height.png')}}" alt="" class=" w-20">
-                    <h2 class="flex text-3xl font-medium ml-4">Balita Perlu Perhatian</h2>
-                </div>
-                <h4 class="text-4xl ml-24 font-bold">{{($balitaStunting+$balitaPerluPerhatian)}} Balita</h4>
-            </div>
-    
-            <div class="bg-[#FFEAA7] mt-4 px-10 py-5 rounded-xl">
-                <div class="flex flex-row items-center">
-                    <img src="{{asset('statistics.png')}}" alt="" class="rounded-full w-20">
-                    <h2 class="flex text-3xl font-medium ml-4">Data yang Perlu Diverifikasi</h2>
-                </div>
-                <h4 class="text-4xl ml-24 font-bold">{{$balitaPerluDiverifikasi}} Balita</h4>
-            </div>
-        </div>
-    
-        {{-- Chart for Low-Medium Dimension (Phone) --}}
-        <div class="mt-4 mx-5 mb-4 rounded-xl lg:hidden bg-[#FFEAA7]">
-            <canvas id="myChart" width="600" height="400"></canvas>
-        </div>
-    
-        {{-- Chart for Medium-High Dimension (Tablet, PC) --}}
-        <div class="mt-10 lg:block hidden mx-28 bg-[#FFEAA7] p-5 rounded-xl">
-            <canvas id="myChartDesktop" width="600" height="400"></canvas>
-        </div>
-    
-    
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // Ambil context dari canvas
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const ctxDesktop = document.getElementById('myChartDesktop').getContext('2d');
-        
-        const dataFromBackend = @json($formattedData);
-    
-        // Data untuk chart
-        const data = {
-            labels: dataFromBackend.lingkungan,
-            datasets: [{
-                label: 'Balita Yang Sehat',
-                data: dataFromBackend.sehat,
-                backgroundColor: 'rgb(255, 99, 132)',
-            }, {
-                label: 'Balita Yang Perlu Perhatian',
-                data: dataFromBackend.kurang_sehat,
-                backgroundColor: 'rgb(54, 162, 235)',
-            }, {
-                label: 'Balita dengan Status Stunting',
-                data: dataFromBackend.stunting,
-                backgroundColor: 'rgb(75, 192, 192)',
-            },
-        ]
-        };
-    
-        // Konfigurasi chart
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Contoh Stacked Bar Chart'
-                    },
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        stacked: true,
-                    },
-                    y: {
-                        stacked: true
-                    }
-                }
-            }
-        };
-    
-        // Buat chart baru
-        const myChart = new Chart(ctx, config);
-        const myChartDesktop = new Chart(ctxDesktop, config);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
-    
-</body>
 
+    <div class="left-0 mx-16 md:mx-24 lg:mx-48">
+        <div class="flex mt-4">
+            <a href="{{ url()->previous() }}" class="bg-[#D9D9D9] hover:bg-[#f8bdc3] hover:translate-x-1 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Kembali
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="flex items-center justify-center">
+        <div style="font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 10px;" class="items-center w-4/5 mt-5 p-5">
+            <div>
+                <h1 style="color: #333;" class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Nama Anak / Nama Orang Tua:</h1>
+                <h2 style="color: #555;" class="font-PlusJakartaSans laptopMid:text-4xl text-2xl font-bold">{{$balita->nama_balita}} / {{$balita->nama_ortu}}</h2>
+            </div> <br>
+            <div>
+                <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Alamat:</h1>
+                <h2 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl font-bold">Lingkungan {{$balita->lingkungan}}</h2>
+            </div><br>
+            <form action="{{ route('balita.store') }}" method="POST">
+                @csrf
+                <input type="text" name="id" value="{{$id_balita}}" required class="hidden">
+                <input type="text" name="id_balita" value="{{$id_balita}}" required class="hidden">
+                <input type="text" name="nama_balita" value="{{$balita->nama_balita}}" required class="hidden">
+                <input type="text" name="nama_ortu" value="{{$balita->nama_ortu}}" required class="hidden">
+                <input type="date" name="tanggal_lahir" value={{$balita->tanggal_lahir}} required class="hidden">
+                <select name="lingkungan" required class="hidden">
+                    <option value="1" {{ $balita->lingkungan == 1 ? 'selected' : '' }}>Lingkungan 1</option>
+                    <option value="2" {{ $balita->lingkungan == 2 ? 'selected' : '' }}>Lingkungan 2</option>
+                    <option value="3" {{ $balita->lingkungan == 3 ? 'selected' : '' }}>Lingkungan 3</option>
+                    <option value="4" {{ $balita->lingkungan == 4 ? 'selected' : '' }}>Lingkungan 4</option>
+                    <option value="5" {{ $balita->lingkungan == 5 ? 'selected' : '' }}>Lingkungan 5</option>
+                </select>
+                <select name="jenis_kelamin" required class="hidden">
+                    <option value="L" {{$balita->jenis_kelamin == 'L' ? 'selected' : ''}}>Laki-laki</option>
+                    <option value="P" {{$balita->jenis_kelamin == 'P' ? 'selected' : ''}}>Perempuan</option>
+                </select>
+                <select name="is_stunting" required class="hidden">
+                    <option value="Stunting" {{ $balita->is_stunting == 'Stunting' ? 'selected' : '' }}>Stunting</option>
+                    <option value="Perlu Perhatian" {{ $balita->is_stunting == 'Perlu Perhatian' ? 'selected' : '' }}>Perlu Perhatian</option>
+                    <option value="Sehat" {{ $balita->is_stunting == 'Sehat' ? 'selected' : '' }}>Sehat</option>
+                    <option value="Perlu Diverifikasi" {{ $balita->is_stunting == 'Perlu Diverifikasi' ? 'selected' : '' }}>Perlu Diverifikasi</option>
+                </select>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Berat Badan:</h1>
+                    <div class="flex items-center">
+                        <input type="number" step="0.1" name="berat_balita" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
+                        <span class="ml-2 text-xl">kg</span>
+                    </div>
+                </div>
+                <br>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Tinggi Badan:</h1>
+                    <div class="flex items-center">
+                        <input type="number" step="0.1" name="tinggi_balita" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
+                        <span class="ml-2 text-xl">cm</span>
+                    </div>
+                </div> <br>
+                <button type="submit" class="hover:bg-[#55A4C0] bg-[#FAD4D8] hover:translate-x-1 text-gray-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Simpan</button>
+            </form>
+        </div>
+    </div>
+</body>
 </html>

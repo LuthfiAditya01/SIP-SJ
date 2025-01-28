@@ -15,4 +15,7 @@ class DataPerkembanganBalita extends Model
         'tinggi_balita',
         'catatan_perkembangan'
     ];
+
+    // Pastikan ini tidak di-set ke false
+    public $timestamps = true;
 }

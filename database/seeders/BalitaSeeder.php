@@ -19,84 +19,108 @@ class BalitaSeeder extends Seeder
             'tanggal_lahir' => '2024-09-1',
             'jenis_kelamin' => 'P',
             'lingkungan' => '1',
-            'is_stunting' => 'Stunting'
+            'is_stunting' => 'Stunting',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Doni',
             'nama_ortu' => 'Sutarman',
             'tanggal_lahir' => '2024-08-7',
             'jenis_kelamin' => 'L',
             'lingkungan' => '3',
-            'is_stunting' => 'Perlu Diverifikasi'
+            'is_stunting' => 'Perlu Diverifikasi',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Aulia',
             'nama_ortu' => 'Indah',
             'tanggal_lahir' => '2024-12-7',
             'jenis_kelamin' => 'P',
             'lingkungan' => '4',
-            'is_stunting' => 'Sehat'
+            'is_stunting' => 'Sehat',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Mutiara',
             'nama_ortu' => 'Putri',
             'tanggal_lahir' => '2024-07-9',
             'jenis_kelamin' => 'P',
             'lingkungan' => '5',
-            'is_stunting' => 'Sehat'
+            'is_stunting' => 'Sehat',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Raka',
             'nama_ortu' => 'Bagus',
             'tanggal_lahir' => '2024-10-15',
             'jenis_kelamin' => 'L',
             'lingkungan' => '2',
-            'is_stunting' => 'Stunting'
+            'is_stunting' => 'Stunting',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Nadia',
             'nama_ortu' => 'Siska',
             'tanggal_lahir' => '2024-11-22',
             'jenis_kelamin' => 'P',
             'lingkungan' => '4',
-            'is_stunting' => 'Perlu Perhatian'
+            'is_stunting' => 'Perlu Perhatian',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Arif',
             'nama_ortu' => 'Rudi',
             'tanggal_lahir' => '2024-06-30',
             'jenis_kelamin' => 'L',
             'lingkungan' => '1',
-            'is_stunting' => 'Sehat'
+            'is_stunting' => 'Sehat',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Salsabila',
             'nama_ortu' => 'Dewi',
             'tanggal_lahir' => '2024-05-12',
             'jenis_kelamin' => 'P',
             'lingkungan' => '3',
-            'is_stunting' => 'Stunting'
+            'is_stunting' => 'Stunting',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Farhan',
             'nama_ortu' => 'Dian',
             'tanggal_lahir' => '2024-03-18',
             'jenis_kelamin' => 'L',
             'lingkungan' => '5',
-            'is_stunting' => 'Sehat'
+            'is_stunting' => 'Sehat',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Rina',
             'nama_ortu' => 'Eka',
             'tanggal_lahir' => '2024-02-05',
             'jenis_kelamin' => 'P',
             'lingkungan' => '2',
-            'is_stunting' => 'Perlu Diverifikasi'
+            'is_stunting' => 'Perlu Diverifikasi',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Yudha',
             'nama_ortu' => 'Hendra',
             'tanggal_lahir' => '2024-04-10',
             'jenis_kelamin' => 'L',
             'lingkungan' => '4',
-            'is_stunting' => 'Sehat'
+            'is_stunting' => 'Sehat',
+            'created_at' => now(),
+            'updated_at' => now()
         ],[
             'nama_balita' => 'Laras',
             'nama_ortu' => 'Rina',
             'tanggal_lahir' => '2024-09-25',
             'jenis_kelamin' => 'P',
             'lingkungan' => '1',
-            'is_stunting' => 'Stunting'
+            'is_stunting' => 'Stunting',
+            'created_at' => now(),
+            'updated_at' => now()
         ]
         // ,[
         //     'nama_balita' => 'Bayu',

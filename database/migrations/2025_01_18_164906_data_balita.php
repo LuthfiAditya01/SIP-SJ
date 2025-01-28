@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('lingkungan', ['1','2','3','4','5']);
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->enum('is_stunting', ['Stunting', 'Perlu Perhatian', 'Sehat', 'Perlu Diverifikasi']);
+            $table->timestamps();
         });
     }
 

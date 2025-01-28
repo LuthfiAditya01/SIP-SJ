@@ -16,9 +16,6 @@ return new class extends Migration
             $table->foreignId('id_balita')->constrained('data_balita');
             $table->decimal('berat_balita', 4, 2);
             $table->decimal('tinggi_balita', 4, 2);
-            // $table->integer('usia_bulan');
-            // $table->decimal('z_score_tb', 5, 2)->nullable();  // Z-score tinggi badan
-            // $table->decimal('z_score_bb', 5, 2)->nullable();  // Z-score berat badan
             $table->text('catatan_perkembangan')->nullable();
             $table->timestamps();
         });

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Data Balita | Lingkungan {{$lingkungan}}</title>
+    <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 </head>
@@ -53,17 +54,17 @@
                                     <li>
                                         <a href="{{route('balita.index', ['lingkungan' => 5])}}" class="block px-4 py-2 hover:transition-all ease-linear duration-500 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Lingkungan 5</a>
                                     </li>
-
+    
                                 </ul>
                             </div>
                         </li>
                         <li class="flex items-center">
-                            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent">Services</a>
+                            <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent">Tambah Balita Baru</a>
                         </li>
-                        <li class="flex items-center">
+                        <li class="flex items-center hidden">
                             <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent">Pricing</a>
                         </li>
-                        <li class="flex items-center">
+                        <li class="flex items-center hidden">
                             <a href="#" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent">Contact</a>
                         </li>
                     </ul>
@@ -74,10 +75,10 @@
 
     <h1 class="md:text-4xl text-2xl font-PlusJakartaSans font-semibold mt-6 mx-6 md:mx-20">Lingkungan 1</h1>
 
-    <div class="flex mx-4 mt-2 md:mx-8 md:mt-4 flex-col md:flex-row md:flex-wrap items-start font-PlusJakartaSans justify-evenly">
+    <div class="flex mx-4 mt-2 md:mx-8 md:mt-4 justify-around items-center flex-wrap font-PlusJakartaSans">
         @foreach ($balita as $data)
             @if($data->jenis_kelamin == 'L')
-                <a href="#">
+                <a href="{{route('balita.detail', ['id_balita' => $data->id])}}">
                     <div class="bg-[#AAE1F4] mt-4 px-10 py-5 rounded-xl">
                         <div class="flex flex-row items-center">
                             <img src="{{asset('boy_vector.png')}}" alt="" class="rounded-full w-20">
@@ -86,19 +87,18 @@
                         <h4 class="md:text-4xl text-xl ml-24">{{$data->tanggal_lahir}}</h4>
                     </div>
                 </a>
-        
-            
-            @else
-                <a href="#">
-                    <div class="bg-[#FAE1E3] mt-4 px-10 py-5 rounded-xl">
-                        <div class="flex flex-row items-center">
-                            <img src="{{asset('girl_vector.png')}}" alt="" class="rounded-full w-20">
-                            <h2 class="flex md:text-3xl text-2xl ml-4 text-wrap font-bold">{{$data->nama_balita}}/{{$data->nama_ortu}}</h2>
+            @elseif($data->jenis_kelamin == 'P')
+                @if($data && $data->id)
+                    <a href="{{route('balita.detail', ['id_balita' => $data->id])}}">
+                        <div class="bg-[#FAE1E3] mt-4 px-10 py-5 rounded-xl">
+                            <div class="flex flex-row items-center">
+                                <img src="{{ asset('girl_vector.png') }}" alt="Foto Balita Perempuan" class="rounded-full w-20">
+                                <h2 class="flex md:text-3xl text-2xl ml-4 text-wrap font-bold">{{ $data->nama_balita }}/{{ $data->nama_ortu }}</h2>
+                            </div>
+                            <h4 class="md:text-4xl text-xl ml-24">{{ $data->tanggal_lahir }}</h4>
                         </div>
-                        <h4 class="md:text-4xl text-xl ml-24">{{$data->tanggal_lahir}}</h4>
-                    </div>
-                </a>
-            
+                    </a>
+                @endif
             @endif
         @endforeach
     </div>

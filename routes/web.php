@@ -25,7 +25,9 @@ Route::get('/', [BalitaController::class, 'home'])->name('home');
 Route::get('/list/{lingkungan}', [BalitaController::class, 'index'])->name('balita.index');
 Route::get('/detail/{id_balita}', [BalitaController::class, 'detail'])->name('balita.detail');
 Route::get('/add/{id_balita}', [BalitaController::class, 'add'])->name('balita.add');
-Route::post('/balita', [BalitaController::class, 'store'])->name('balita.store');
+Route::post('/balita_add', [BalitaController::class, 'store'])->name('balita.store');
+Route::get('/new', [BalitaController::class, 'new'])->name('balita.new');
+Route::post('/balita_new', [BalitaController::class, 'newStore'])->name('balita.new_store');
 // // Route untuk guest
 // Route::middleware('guest')->group(function () {
 //     Route::get('/', function () {

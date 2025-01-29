@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Balita | Lingkungan {{$lingkungan}}</title>
-    <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Tambah Balita Baru</title>
+        <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
+    
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
 <body>
     <header>
         <nav class="bg-[#FAD4D8] border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -78,35 +78,81 @@
         </nav>
     </header>
 
-    <h1 class="md:text-4xl text-2xl font-PlusJakartaSans font-semibold mt-6 mx-6 md:mx-20">Lingkungan 1</h1>
-
-    <div class="flex mx-4 mt-2 md:mx-8 md:mt-4 justify-around items-center flex-wrap font-PlusJakartaSans">
-        @foreach ($balita as $data)
-            @if($data->jenis_kelamin == 'L')
-                <a href="{{route('balita.detail', ['id_balita' => $data->id])}}">
-                    <div class="bg-[#AAE1F4] mt-4 px-10 py-5 rounded-xl">
-                        <div class="flex flex-row items-center">
-                            <img src="{{asset('boy_vector.png')}}" alt="" class="rounded-full w-20">
-                            <h2 class="md:text-3xl text-2xl font-bold text-wrap ml-4">{{$data->nama_balita}}/{{$data->nama_ortu}}</h2>
-                        </div>
-                        <h4 class="md:text-4xl text-xl ml-24">{{$data->tanggal_lahir}}</h4>
-                    </div>
-                </a>
-            @elseif($data->jenis_kelamin == 'P')
-                @if($data && $data->id)
-                    <a href="{{route('balita.detail', ['id_balita' => $data->id])}}">
-                        <div class="bg-[#FAE1E3] mt-4 px-10 py-5 rounded-xl">
-                            <div class="flex flex-row items-center">
-                                <img src="{{ asset('girl_vector.png') }}" alt="Foto Balita Perempuan" class="rounded-full w-20">
-                                <h2 class="flex md:text-3xl text-2xl ml-4 text-wrap font-bold">{{ $data->nama_balita }}/{{ $data->nama_ortu }}</h2>
-                            </div>
-                            <h4 class="md:text-4xl text-xl ml-24">{{ $data->tanggal_lahir }}</h4>
-                        </div>
-                    </a>
-                @endif
-            @endif
-        @endforeach
+    <div class="flex ml-6 w mt-4">
+        <a href="{{ url()->previous() }}" class="bg-[#D9D9D9] hover:bg-[#f8bdc3] hover:translate-x-1 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+            <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali
+            </div>
+        </a>
     </div>
-    
+
+    <div class="flex items-center justify-center">
+        <div style="font-family: Arial, sans-serif; border: 1px solid #ccc; border-radius: 10px;" class="items-center w-4/5 mt-5 p-5">
+            <form action="{{ route('balita.new_store') }}" method="POST">
+                @csrf
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Nama Balita :</h1>
+                    <div class="flex items-center">
+                        <input type="text" name="nama_balita" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                        @error('nama_balita')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Nama Ortu :</h1>
+                    <div class="flex items-center">
+                        <input type="text" name="nama_ortu" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                        @error('nama_ortu')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Tanggal Lahir</h1>
+                    <div class="flex items-center">
+                        <input type="date" name="tanggal_lahir" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                        @error('tanggal_lahir')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Lingkungan 1</h1>
+                    <div class="flex items-center">
+                        <select name="lingkungan" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                            <option value="1">Lingkungan 1</option>
+                            <option value="2">Lingkungan 2</option>
+                            <option value="3">Lingkungan 3</option>
+                            <option value="4">Lingkungan 4</option>
+                            <option value="5">Lingkungan 5</option>
+                        </select>
+                        @error('lingkungan')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Jenis Kelamin :</h1>
+                    <div class="flex items-center">
+                        <select name="jenis_kelamin" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                        @error('jenis_kelamin')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div><br>
+                <button type="submit" class="hover:bg-[#55A4C0] bg-[#FAD4D8] hover:translate-x-1 text-gray-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Simpan</button>
+
+            </form>
+        </div>
+    </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
+
 </html>

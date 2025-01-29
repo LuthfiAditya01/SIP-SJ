@@ -18,6 +18,9 @@ class DataBalita extends Model
         'jenis_kelamin',
         'is_stunting'
     ];
+    // protected $casts = [
+    //     'tanggal_lahir' => 'date',
+    // ];
 
     // public function balita()
     // {

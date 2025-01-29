@@ -15,6 +15,9 @@ class DataPerkembanganBalita extends Model
         'tinggi_balita',
         'catatan_perkembangan'
     ];
+    protected $casts = [
+        'tanggal_penimbangan' => 'date',
+    ];
 
     // Pastikan ini tidak di-set ke false
     public $timestamps = true;

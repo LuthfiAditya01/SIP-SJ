@@ -92,8 +92,8 @@ class BalitaController extends Controller
 
     public function detail($id_balita){
         $balita = DataBalita::where('id', $id_balita)->first();
-        $perkembangan = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('created_at', 'desc')->take(5)->get();
-        $perkembanganTotal = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('created_at', 'desc')->get();
+        $perkembangan = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('tanggal_penimbangan', 'desc')->take(5)->get();
+        $perkembanganTotal = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('tanggal_penimbangan', 'desc')->get();
         $timbanganPertama = DataPerkembanganBalita::where('id_balita', $id_balita)->oldest()->first();
         
         return view('balita_detail', compact('balita', 'perkembangan', 'perkembanganTotal', 'timbanganPertama', 'id_balita'));
@@ -129,31 +129,35 @@ class BalitaController extends Controller
         return redirect()->route('balita.detail', ['id_balita' => $request->id_balita])->with('success', 'Status is_stunting telah diperbarui dan data perkembangan balita baru telah ditambahkan.');
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validasi data yang diterima
-    //     $validatedData = $request->validate([
-    //         'id' => 'required|max:255',
-    //         'id_balita' => 'required|max:255',
-    //         'nama_balita' => 'required|string|max:255',
-    //         'nama_ortu' => 'required|string|max:255',
-    //         'tanggal_lahir' => 'required|date',
-    //         'lingkungan' => 'required|numeric',
-    //         'jenis_kelamin' => 'required|in:L,P',
-    //         'is_stunting' => 'required|in:Stunting,Perlu Perhatian,Sehat,Perlu Diverifikasi'
-    //     ]);
+    public function new(){
+        return view('balita_new');
+    }
 
-    //     $alterStatus = $request->validate([
-    //         'id' => 'required|max:255'
-    //     ]);
+    public function newStore(Request $request){
+        $validatedData = $request->validate([
+            'nama_balita' => 'required|string|max:255',
+            'nama_ortu' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date|before_or_equal:today',
+            'lingkungan' => 'required|in:1,2,3,4,5',
+            'jenis_kelamin' => 'required|in:L,P'
+        ], [
+            'nama_balita.required' => 'Nama balita harus diisi.',
+            'nama_balita.string' => 'Nama balita harus berupa teks.',
+            'nama_balita.max' => 'Nama balita tidak boleh lebih dari 255 karakter.',
+            'nama_ortu.required' => 'Nama orang tua harus diisi.',
+            'nama_ortu.string' => 'Nama orang tua harus berupa teks.',
+            'nama_ortu.max' => 'Nama orang tua tidak boleh lebih dari 255 karakter.',
+            'tanggal_lahir.required' => 'Tanggal lahir harus diisi.',
+            'tanggal_lahir.date' => 'Tanggal lahir harus berupa tanggal yang valid.',
+            'tanggal_lahir.before_or_equal' => 'Tanggal lahir tidak boleh lebih dari hari ini.',
+            'lingkungan.required' => 'Lingkungan harus diisi.',
+            'lingkungan.in' => 'Lingkungan yang dipilih tidak valid.',
+            'jenis_kelamin.required' => 'Jenis kelamin harus diisi.',
+            'jenis_kelamin.in' => 'Jenis kelamin yang dipilih tidak valid.'
+        ]);
 
-    //     // Membuat instance baru dari model DataBalita
-    //     $balita = new DataBalita($validatedData);
-
-    //     // Menyimpan data ke database
-    //     $balita->save();
-
-    //     // Redirect ke halaman lain dengan pesan sukses
-    //     return redirect()->route('balita.index')->with('success', 'Data balita berhasil ditambahkan.');
-    // }
+        $balita = new DataBalita($validatedData);
+        $balita->save();
+        return redirect()->route('balita.detail', ['id_balita' => $balita->id])->with('success', 'Data balita berhasil ditambahkan.');
+    }
 }

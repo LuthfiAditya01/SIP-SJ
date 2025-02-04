@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(BalitaSeeder::class);
         $this->call(DataPerkembanganBalitaSeeder::class);
+        $this->call(UsersTableSeeder::class);
         // $this->call(RoleSeeder::class);
         // $this->call(UserSeeder::class);
         // \App\Models\User::factory(10)->create();

@@ -78,7 +78,7 @@
         </nav>
     </header>
 
-    <h1 class="md:text-4xl text-2xl font-PlusJakartaSans font-semibold mt-6 mx-6 md:mx-20">Lingkungan 1</h1>
+    <h1 class="md:text-4xl text-2xl font-PlusJakartaSans font-semibold mt-6 mx-6 md:mx-20">Lingkungan {{$lingkungan}}</h1>
 
     <div class="flex mx-4 mt-2 md:mx-8 md:mt-4 justify-around items-center flex-wrap font-PlusJakartaSans">
         @foreach ($balita as $data)

@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DataBalita;
 use App\Models\DataPerkembanganBalita;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class BalitaController extends Controller
 {
     public $userModel;
+    // protected $lingkungan;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->lingkungan = Auth()->user()->lingkungan;
+    }
 
     public function home(){
         // Inisialisasi array dengan struktur yang benar
+        $lingkungan = auth()->user()->lingkungan;
         $formattedData = [
             'lingkungan' => ['1', '2', '3', '4', '5'], // Set lingkungan berurutan
             'sehat' => array_fill(0, 5, 0), // Inisialisasi array dengan 0 untuk 5 lingkungan
@@ -72,11 +81,13 @@ class BalitaController extends Controller
             // }
         
 
-        return view('home', compact('balitaSehat', 'balitaStunting', 'balitaPerluPerhatian', 'balitaPerluDiverifikasi', 'formattedData'));
+        return view('home', compact('balitaSehat', 'balitaStunting', 'balitaPerluPerhatian', 'balitaPerluDiverifikasi', 'formattedData', 'lingkungan'));
     }
 
     public function index($lingkungan = null)
     {
+        $lingkungan = auth()->user()->lingkungan;
+
         if (!$lingkungan) {
             return redirect()->route('home');
         }

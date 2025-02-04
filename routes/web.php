@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BalitaController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,59 +20,31 @@ use App\Http\Controllers\UserController;
 //     return view('welcome');
 // });
 
-Route::get('/', [BalitaController::class, 'home'])->name('home');
-Route::get('/list/{lingkungan}', [BalitaController::class, 'index'])->name('balita.index');
-Route::get('/detail/{id_balita}', [BalitaController::class, 'detail'])->name('balita.detail');
-Route::get('/add/{id_balita}', [BalitaController::class, 'add'])->name('balita.add');
-Route::post('/balita_add', [BalitaController::class, 'store'])->name('balita.store');
-Route::get('/new', [BalitaController::class, 'new'])->name('balita.new');
-Route::post('/balita_new', [BalitaController::class, 'newStore'])->name('balita.new_store');
-// // Route untuk guest
-// Route::middleware('guest')->group(function () {
-//     Route::get('/', function () {
-//         return redirect()->route('login');
-//     });
-// });
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Auth::routes();
-
-// // Route untuk dashboard berdasarkan role
 // Route::middleware('auth')->group(function () {
-//     // Redirect ke dashboard sesuai role
-//     Route::get('/home', function () {
-//         $user = auth()->user();
-//         if ($user->hasRole('admin')) {
-//             return redirect()->route('admin.dashboard');
-//         } elseif ($user->hasRole('bidan')) {
-//             return redirect()->route('bidan.dashboard');
-//         } elseif ($user->hasRole('kader')) {
-//             return redirect()->route('kader.dashboard');
-//         }
-//         auth()->logout();
-//         return redirect()->route('login')
-//             ->with('error', 'Akun anda belum memiliki role');
-//     })->name('home');
-
-//     Route::get('/data_balita/{lingkungan?}', [BalitaController::class, 'index'])->name('balita.index');
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-// // Route untuk admin
-// Route::middleware(['auth', 'role:admin'])->group(function () {
-//     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-// });
+Route::get('/', function(){
+    return view('welcome');
+})->name('home');
 
-// // Route untuk bidan 
-// Route::middleware(['auth', 'role:bidan'])->group(function () {
-//     Route::get('/bidan/dashboard', [BalitaController::class, 'home'])->name('bidan.dashboard');
-// });
+// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
-// // Route untuk kader
-// Route::middleware(['auth', 'role:kader'])->group(function () {
-//     Route::get('/kader/dashboard', [UserController::class, 'dashboard'])->name('kader.dashboard');
-// });
+// Route::get('/dashboard', [BalitaController::class, 'index'])->name('dashboard')->
+Route::middleware(['auth', 'role:kader,bidan'])->group(function(){
+    Route::get('/dashboard', [BalitaController::class, 'home'])->name('dashboard');
+    Route::get('/list/{lingkungan}', [BalitaController::class, 'index'])->name('balita.index');
+    Route::get('/detail/{id_balita}', [BalitaController::class, 'detail'])->name('balita.detail');
+    Route::get('/add/{id_balita}', [BalitaController::class, 'add'])->name('balita.add');
+    Route::post('/balita_add', [BalitaController::class, 'store'])->name('balita.store');
+    Route::get('/new', [BalitaController::class, 'new'])->name('balita.new');
+    Route::post('/balita_new', [BalitaController::class, 'newStore'])->name('balita.new_store');
+});
 
-// // Fallback route
-// Route::fallback(function () {
-//     return redirect()->route('login');
-// });
-
+require __DIR__.'/auth.php';

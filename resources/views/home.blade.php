@@ -74,8 +74,11 @@
     </header>
     <main class="container mx-auto px-4">
         <h2 class="text-2xl mt-4 font-PlusJakartaSans">Selamat Datang,</h2>
-        <h1 class="text-4xl mt-2 font-PlusJakartaSans font-bold">{{auth()->user()->role}} {{auth()->user()->name}}</h1>
-
+        @if(auth()->user()->role == 'bidan')
+        <h1 class="text-4xl mt-2 font-PlusJakartaSans font-bold">Bidan {{auth()->user()->name}}</h1>
+        @else
+        <h1 class="text-4xl mt-2 font-PlusJakartaSans font-bold">Kader {{auth()->user()->name}}</h1>
+        @endif
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
             <div class="bg-[#FFEAA7] p-6 rounded-xl">
                 <div class="flex items-center">

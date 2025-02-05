@@ -16,7 +16,11 @@ class DataBalita extends Model
         'tanggal_lahir',
         'lingkungan',
         'jenis_kelamin',
-        'is_stunting'
+        'is_stunting',
+        'nik_balita',
+        'nik_ortu',
+        'alamat',
+        'have_kia'
     ];
     // protected $casts = [
     //     'tanggal_lahir' => 'date',

@@ -16,6 +16,10 @@ return new class extends Migration
             $table->id();
             $table->string('nama_balita');
             $table->string('nama_ortu');
+            $table->string('nik_balita');
+            $table->string('nik_ortu');
+            $table->string('alamat');
+            $table->enum('have_kia', ['Ya', 'Tidak']);
             $table->date('tanggal_lahir');
             $table->enum('lingkungan', ['1','2','3','4','5']);
             $table->enum('jenis_kelamin', ['L', 'P']);

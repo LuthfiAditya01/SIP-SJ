@@ -13,7 +13,11 @@ class DataPerkembanganBalita extends Model
         'id_balita',
         'berat_balita',
         'tinggi_balita',
-        'catatan_perkembangan'
+        'lingkar_kepala',
+        'lingkar_lengan',
+        'vaksin',
+        'imunisasi',
+        'tanggal_penimbangan'
     ];
     protected $casts = [
         'tanggal_penimbangan' => 'date',

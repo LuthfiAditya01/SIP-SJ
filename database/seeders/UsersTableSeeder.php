@@ -21,6 +21,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'Admin',
+                'is_verified' => true,
                 'lingkungan' => '1',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -31,6 +32,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'Bidan',
+                'is_verified' => true,
                 'lingkungan' => '2',
                 'created_at' => now(),
                 'updated_at' => now()
@@ -41,6 +43,7 @@ class UsersTableSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'),
                 'role' => 'Kader',
+                'is_verified' => true,
                 'lingkungan' => '3',
                 'created_at' => now(),
                 'updated_at' => now()

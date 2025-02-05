@@ -11,10 +11,9 @@
 </head>
 <body>
     <header>
-        @if(auth()->user()->role == 'bidan')
         <nav class="bg-[#FAD4D8] border-gray-200">
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <a href="{{route('home')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="{{route('dashboard')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="{{ asset('Posyandu_Logo.png') }}" class="h-10" alt="Logo Posyandu" />
                     <span class="self-center hidden lg:block text-2xl font-semibold whitespace-nowrap">Sistem informasi Posyandu Seputih Jaya</span>
                     <span class="self-center lg:hidden text-2xl font-semibold whitespace-nowrap">SIP SJ</span>
@@ -25,12 +24,13 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
                     </svg>
                 </button>
-                <div class="hidden w-full lg:block lg:w-auto" id="navbar-dropdown">
+                <div class="hidden items-center w-full lg:block lg:w-auto" id="navbar-dropdown">
                     <ul class="flex flex-col font-medium p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-[#FAD4D8] lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-[#FAD4D8]">
-                        <li>
-                            <a href="{{route('home')}}" class="block py-2 px-3 hover:transition-all ease-linear duration-500 hover:bg-gray-100 rounded-full" aria-current="page">Home</a>
+                        <li class="flex items-center px-3 hover:bg-gray-100 rounded-full transition-all ease-linear">
+                            <a href="{{route('dashboard')}}" class="block py-2 px-3 hover:transition-all ease-linear duration-500 hover:bg-gray-100 rounded-full" aria-current="page">Home</a>
                         </li>
                         <li class="flex items-center px-3 hover:bg-gray-100 rounded-full transition-all ease-linear">
+                            @if(auth()->user()->role == 'bidan')
                             <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="inline-flex items-center justify-center py-2 px-3 text-gray-900 lg:p-0">
                                 <span class="flex items-center">
                                     Lihat Data Balita
@@ -48,14 +48,21 @@
                                     @endfor
                                 </ul>
                             </div>
+                            @elseif(auth()->user()->role == 'kader')
+                                <a href="{{route('balita.index', ['lingkungan' => $lingkungan])}}" class="inline-flex items-center justify-center py-2 px-3 text-gray-900 lg:p-0">
+                                    <span class="flex items-center">
+                                        Lihat Data Balita
+                                    </span>
+                                </a>
+                            @endif
                         </li>
                         <li class="flex items-center">
-                            <a href="{{route('balita.new')}}" class="block py-2 px-3 text-gray-900 hover:bg-gray-100 rounded-full">Tambah Balita Baru</a>
+                            <a href="{{route('balita.new')}}" class="block py-2 px-3 text-gray-900 hover:bg-gray-100 rounded-full transition-all ease-linear">Tambah Balita Baru</a>
                         </li>
-                        <li class="flex items-center">
+                        <li class="flex items-center px-3 hover:bg-gray-100 rounded-full transition-all ease-linear">
                             <form method="POST" action="{{ route('logout') }}" class="block py-2 px-3">
                                 @csrf
-                                <button type="submit" class="text-gray-900 hover:bg-gray-100 rounded-full px-3 py-2">
+                                <button type="submit" class="text-gray-900 hover:bg-gray-100 rounded-full px-3 py-2 w-full text-left">
                                     Logout
                                 </button>
                             </form>
@@ -64,53 +71,6 @@
                 </div>
             </div>
         </nav>
-    @elseif(auth()->user()->role == 'kader')
-    <nav class="bg-[#FAD4D8] border-gray-200">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="{{route('home')}}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="{{ asset('Posyandu_Logo.png') }}" class="h-10" alt="Logo Posyandu" />
-                <span class="self-center hidden lg:block text-2xl font-semibold whitespace-nowrap">Sistem informasi Posyandu Seputih Jaya</span>
-                <span class="self-center lg:hidden text-2xl font-semibold whitespace-nowrap">SIP SJ</span>
-            </a>
-            <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-dropdown" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-                </svg>
-            </button>
-            <div class="hidden w-full lg:block lg:w-auto" id="navbar-dropdown">
-                <ul class="flex flex-col font-medium p-4 lg:p-0 mt-4 border border-gray-100 rounded-lg bg-[#FAD4D8] lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-[#FAD4D8]">
-                    <li>
-                        <a href="{{route('home')}}" class="block py-2 px-3 hover:transition-all ease-linear duration-500 hover:bg-gray-100 rounded-full" aria-current="page">Home</a>
-                    </li>
-                    <li class="flex items-center px-3 hover:bg-gray-100 rounded-full transition-all ease-linear">
-                        <a href="{{route('balita.index', ['lingkungan' => $lingkungan])}}" class="inline-flex items-center justify-center py-2 px-3 text-gray-900 lg:p-0">
-                            <span class="flex items-center">
-                                Lihat Data Balita
-                                <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </span>
-                        </a>
-                    </li>
-
-                    <li class="flex items-center">
-                        <a href="{{route('balita.new')}}" class="block py-2 px-3 text-gray-900 hover:bg-gray-100 rounded-full">Tambah Balita Baru</a>
-                    </li>
-                    <li class="flex items-center">
-                        <form method="POST" action="{{ route('logout') }}" class="block py-2 px-3">
-                            @csrf
-                            <button type="submit" class="text-gray-900 hover:bg-gray-100 rounded-full px-3 py-2">
-                                Logout
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    @endif
     </header>
     <main class="container mx-auto px-4">
         <h2 class="text-2xl mt-4 font-PlusJakartaSans">Selamat Datang,</h2>

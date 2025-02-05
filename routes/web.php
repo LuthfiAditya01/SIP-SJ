@@ -45,6 +45,12 @@ Route::middleware(['auth', 'role:kader,bidan'])->group(function(){
     Route::post('/balita_add', [BalitaController::class, 'store'])->name('balita.store');
     Route::get('/new', [BalitaController::class, 'new'])->name('balita.new');
     Route::post('/balita_new', [BalitaController::class, 'newStore'])->name('balita.new_store');
+    Route::delete('/perkembangan-total/{id}', [BalitaController::class, 'destroy'])->name('balita.destroy');
+    // Tampilkan form edit
+    Route::get('/perkembangan-total/edit/{id}', [BalitaController::class, 'edit'])->name('perkembangan.edit');
+
+    // Proses update data
+    Route::put('/perkembangan-total/{id}', [BalitaController::class, 'update'])->name('balita.update');
 });
 
 require __DIR__.'/auth.php';

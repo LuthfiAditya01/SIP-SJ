@@ -16,8 +16,11 @@ return new class extends Migration
             $table->foreignId('id_balita')->constrained('data_balita');
             $table->decimal('berat_balita', 4, 2);
             $table->decimal('tinggi_balita', 4, 2);
+            $table->decimal('lingkar_kepala', 4, 2);
+            $table->decimal('lingkar_lengan', 4, 2);
+            $table->enum('vaksin', ['Vitamin A', 'Obat Cacing', 'Tidak Diberikan']);
+            $table->string('imunisasi');
             $table->date('tanggal_penimbangan');
-            $table->text('catatan_perkembangan')->nullable();
             $table->timestamps();
         });
     }

@@ -8,7 +8,10 @@
     <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
+
 </head>
+
 <body>
     <header>
         <nav class="bg-[#FAD4D8] border-gray-200">

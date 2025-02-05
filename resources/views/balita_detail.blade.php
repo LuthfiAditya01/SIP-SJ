@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Data {{$balita->nama_balita}}</title>
     <link rel="shortcut icon" href="{{asset('Posyandu_Logo.png')}}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.0.0/dist/flowbite.min.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

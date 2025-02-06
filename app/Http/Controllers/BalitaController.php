@@ -130,7 +130,8 @@ class BalitaController extends Controller
     public function add($id_balita){
         $balita = DataBalita::find($id_balita);
         $balitaPerkembangan = DataPerkembanganBalita::where('id_balita', $id_balita)->get();
-        return view('balita_add', compact('balita', 'balitaPerkembangan', 'id_balita'));
+        $lingkungan = auth()->user()->lingkungan;
+        return view('balita_add', compact('balita', 'balitaPerkembangan', 'id_balita', 'lingkungan'));
     }
 
     public function store(Request $request)
@@ -288,7 +289,9 @@ class BalitaController extends Controller
     {
         $balita = DataPerkembanganBalita::findOrFail($id);
         $dataBalita = DataBalita::where('id', $balita->id_balita)->first();
-        return view('balita_edit', compact('balita', 'dataBalita'));
+        $lingkungan = auth()->user()->lingkungan;
+
+        return view('balita_edit', compact('balita', 'dataBalita', 'lingkungan'));
     }
 
     // Proses update data
@@ -301,6 +304,8 @@ class BalitaController extends Controller
                 'berat_balita' => 'required|numeric',
                 // Tambahkan validasi untuk field lainnya
             ]);
+
+            $lingkungan = auth()->user()->lingkungan;
 
             // Update data
             $perkembangan = DataPerkembanganBalita::findOrFail($id);

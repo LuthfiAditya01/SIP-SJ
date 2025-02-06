@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->boolean('is_verified');
+            $table->boolean('is_verified')->default(false);
             $table->enum('role', ['admin', 'bidan', 'kader'])->default('kader');
             $table->enum('lingkungan',['1', '2', '3', '4', '5'])->nullable();
         });

@@ -122,8 +122,9 @@ class BalitaController extends Controller
         $perkembangan = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('tanggal_penimbangan', 'desc')->take(5)->get();
         $perkembanganTotal = DataPerkembanganBalita::where('id_balita', $id_balita)->orderBy('tanggal_penimbangan', 'desc')->get();
         $timbanganPertama = DataPerkembanganBalita::where('id_balita', $id_balita)->oldest()->first();
+        $lingkungan = auth()->user()->lingkungan;
         
-        return view('balita_detail', compact('balita', 'perkembangan', 'perkembanganTotal', 'timbanganPertama', 'id_balita'));
+        return view('balita_detail', compact('balita', 'perkembangan', 'perkembanganTotal', 'timbanganPertama', 'id_balita', 'lingkungan'));
     }
 
     public function add($id_balita){

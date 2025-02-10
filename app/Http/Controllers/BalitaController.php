@@ -291,7 +291,7 @@ class BalitaController extends Controller
         $dataBalita = DataBalita::where('id', $balita->id_balita)->first();
         $lingkungan = auth()->user()->lingkungan;
 
-        return view('balita_edit', compact('balita', 'dataBalita', 'lingkungan'));
+        return view('balita_edit', compact('balita', 'dataBalita', 'lingkungan', 'id'));
     }
 
     // Proses update data
@@ -300,23 +300,91 @@ class BalitaController extends Controller
         try {
             // Validasi input
             $request->validate([
+                'id_balita' => 'required|numeric',
                 'tanggal_penimbangan' => 'required|date',
-                'berat_balita' => 'required|numeric',
-                // Tambahkan validasi untuk field lainnya
+                'berat_balita' => 'required|numeric|min:0',
+                'tinggi_balita' => 'required|numeric|min:0',
+                'lingkar_kepala' => 'required|numeric|min:0', // Pastikan name attribute di form sesuai
+                'lingkar_lengan' => 'required|numeric|min:0', // Pastikan name attribute di form sesuai
+                'vaksin' => 'required|in:Vitamin A,Obat Cacing,Tidak Diberikan',
+                'imunisasi' => 'required|string|max:255' // Pastikan name attribute di form sesuai
+            ], [
+                // id_balita
+                'id_balita.required' => 'ID balita wajib ada',
+                'id_balita.numeric' => 'Format ID balita tidak valid',
+                
+                // tanggal_penimbangan
+                'tanggal_penimbangan.required' => 'Tanggal penimbangan harus diisi',
+                'tanggal_penimbangan.date' => 'Format tanggal tidak valid',
+    
+                // Berat Balita
+                'berat_balita.required' => 'Berat badan harus diisi',
+                'berat_balita.numeric' => 'Berat badan harus berupa angka',
+                'berat_balita.min' => 'Berat badan tidak boleh negatif',
+                
+                // tinggi_balita
+                'tinggi_balita.required' => 'Tinggi badan harus diisi',
+                'tinggi_balita.numeric' => 'Tinggi badan harus berupa angka',
+                'tinggi_balita.min' => 'Tinggi badan tidak boleh negatif',
+                
+                // lingkar_kepala
+                'lingkar_kepala.required' => 'Lingkar kepala harus diisi',
+                'lingkar_kepala.numeric' => 'Lingkar kepala harus berupa angka',
+                'lingkar_kepala.min' => 'Lingkar kepala tidak boleh negatif',
+                
+                // lingkar_lengan
+                'lingkar_lengan.required' => 'Lingkar lengan harus diisi',
+                'lingkar_lengan.numeric' => 'Lingkar lengan harus berupa angka',
+                'lingkar_lengan.min' => 'Lingkar lengan tidak boleh negatif',
+                
+                // vaksin
+                'vaksin.required' => 'Pilihan vaksin/obat cacing harus diisi',
+                'vaksin.in' => 'Pilihan vaksin tidak valid',
+                
+                // imunisasi
+                'imunisasi.required' => 'Kolom imunisasi harus diisi',
+                'imunisasi.string' => 'Imunisasi harus berupa teks',
+                'imunisasi.max' => 'Imunisasi maksimal 255 karakter'
             ]);
 
             $lingkungan = auth()->user()->lingkungan;
 
             // Update data
             $perkembangan = DataPerkembanganBalita::findOrFail($id);
+            // dd($perkembangan);
             $perkembangan->update($request->all());
+            // dd($request->all());
 
-            return redirect()->route('balita.detail', ['id_balita' => $perkembangan->id_balita])
+
+
+
+            return redirect()->route('balita.detail', ['id_balita' => $request->id_balita])
                 ->with('success', 'Data berhasil diperbarui!');
 
         } catch (\Exception $e) {
             return redirect()->back()
                 ->with('error', 'Gagal memperbarui data: ' . $e->getMessage());
+        }
+    }
+
+    public function updateStatus($id, Request $request)
+    {
+        try {
+            $request->validate([
+                'is_stunting' => 'required|in:Perlu Diverifikasi,Sehat,Perlu Perhatian,Stunting',
+            ]);
+
+            $perkembangan = DataBalita::find($id);
+
+            if (!$perkembangan) {
+                return redirect()->route('balita.detail', ['id_balita' => $id])->with('error', 'Data tidak ditemukan.');
+            }
+
+            $perkembangan->update(['is_stunting' => $request->input('is_stunting')]);
+
+            return redirect()->route('balita.detail', ['id_balita' => $id])->with('success', 'Sukses Memperbarui Status');
+        } catch (\Exception $e) {
+            return redirect()->route('balita.detail', ['id_balita' => $id])->with('error', 'Gagal memperbarui status: ' . $e->getMessage());
         }
     }
 }

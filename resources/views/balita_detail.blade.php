@@ -108,6 +108,34 @@
                 <h2 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl font-bold">{{$balita->nama_ortu}} | {{$balita->nik_ortu}}</h2>
             </div> <br>
             <div>
+                <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Status Kesehatan:</h1>
+                <h2 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl font-bold">{{$balita->is_stunting}}</h2>
+                @if(auth()->user()->role == 'bidan')
+                <button id="open-modal-btn" onclick="openModal()" class="mt-1 p-2 text-lg bg-yellow-200 rounded-lg">
+                    Ubah Status!
+                </button>
+                
+                <div class="modal-overlay hidden" id="modalOverlay">
+                    <form action="{{route('balita.updateStatus', $balita->id)}}" method="post">
+                        @csrf
+                        @method('PUT')
+                        <label for="vaksin" class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Status Kesehatan</label><br>
+                        <select name="is_stunting" id="is_stunting" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                            <option value="Perlu Diverifikasi" {{$balita->is_stunting=='Perlu Diverifikasi' ? 'selected' : ''}}>Perlu Diverifikasi</option>
+                            <option value="Sehat" {{$balita->is_stunting=='Sehat' ? 'selected' : ''}}>Sehat</option>
+                            <option value="Perlu Perhatian" {{$balita->is_stunting=='Perlu Perhatian' ? 'selected' : ''}}>Perlu Perhatian</option>
+                            <option value="Stunting" {{$balita->is_stunting=='Stunting' ? 'selected' : ''}}>Stunting</option>
+                        </select><br>
+                        <div class="flex justify-around flex-wrap">
+                            <button type="submit" class="hover:bg-[#55A4C0] bg-[#FAD4D8] mt-3 hover:translate-x-1 text-gray-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out">Ubah</button>
+                        <button type="button" class="hover:bg-red-700 bg-red-300 mt-3 hover:translate-x-1 text-gray-600 hover:text-white font-semibold py-2 px-4 rounded-lg transition duration-300 ease-in-out" onclick="closeModal()">Batal</button>
+                        </div>
+                    </form>
+                </div>
+                @endif
+
+            </div> <br>
+            <div>
                 <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Jenis Kelamin:</h1>
                 @if($balita->jenis_kelamin == 'L')
                 <h2 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl font-bold">Laki-Laki</h2>
@@ -167,7 +195,7 @@
                                     Lingkar Lengan
                                 </th>
                                 <th scope="col" class="py-3">
-                                    Vaksin/Obat Cacing
+                                    Vaksin/Perlu Perhatian
                                 </th>
                                 <th scope="col" class="py-3">
                                     Imunisasi
@@ -248,7 +276,7 @@
                                     Lingkar Lengan
                                 </th>
                                 <th scope="col" class="py-3">
-                                    Vaksin/Obat Cacing
+                                    Vaksin/Perlu Perhatian
                                 </th>
                                 <th scope="col" class="py-3">
                                     Imunisasi
@@ -306,6 +334,8 @@
             @endif
         </div>
     </div>
+
+
     <script>
         function togglePerkembangan() {
             const perkembanganTotal = document.getElementById('PerkembanganTotal');
@@ -324,30 +354,29 @@
         }
         // Fungsi untuk menghitung umur dari tanggal lahir
         function hitungUmur(tanggalLahir) {
-            // Konversi string tanggal lahir ke objek Date
             const tglLahir = new Date(tanggalLahir);
             const sekarang = new Date();
             
-            // Hitung selisih tahun
+            // Hitung selisih awal
             let tahun = sekarang.getFullYear() - tglLahir.getFullYear();
             let bulan = sekarang.getMonth() - tglLahir.getMonth();
+            let hari = sekarang.getDate() - tglLahir.getDate();
             
-            // Sesuaikan jika bulan lahir belum tercapai di tahun ini
-            if (bulan < 0 || (bulan === 0 && sekarang.getDate() < tglLahir.getDate())) {
+            // Koreksi untuk hari negatif
+            if (hari < 0) {
+                const akhirBulanLalu = new Date(sekarang.getFullYear(), sekarang.getMonth(), 0);
+                bulan--;
+                hari += akhirBulanLalu.getDate();
+            }
+            
+            // Koreksi untuk bulan negatif
+            if (bulan < 0) {
                 tahun--;
-                bulan = 12 + bulan;
+                bulan += 12;
             }
             
-            // Format string hasil
-            let hasil = '';
-            if (tahun > 0) {
-                hasil += tahun + ' tahun ';
-            }
-            if (bulan > 0) {
-                hasil += bulan + ' bulan';
-            }
-            
-            return hasil.trim();
+            // Format output dengan semua komponen
+            return `${tahun} tahun ${bulan} bulan ${hari} hari`;
         }
 
         // Ambil tanggal lahir dari data balita
@@ -358,6 +387,51 @@
             const umurElement = document.getElementById('umurBalita');
             const umur = hitungUmur(tanggalLahir);
             umurElement.textContent = `${tanggalLahir} / ${umur}`;
+        });
+
+        function openModal() {
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        // Handle form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Ambil nilai form
+            const nama = document.getElementById('nama').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Validasi sederhana
+            if(nama && email && password) {
+                // Proses data (bisa dikirim ke server)
+                alert(`Registrasi berhasil!\nNama: ${nama}\nEmail: ${email}`);
+                closeModal();
+                document.getElementById('registrationForm').reset();
+            } else {
+                alert('Harap isi semua field!');
+            }
+        }
+
+
+
+        // Tutup modal ketika klik di luar area modal
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if(e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Tutup modal dengan tombol ESC
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape') {
+                closeModal();
+            }
         });
     </script>
 </body>

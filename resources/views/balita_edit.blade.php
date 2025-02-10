@@ -102,9 +102,9 @@
                 @csrf
 
                 @method('PUT')
-                {{-- <input type="text" name="id" value="{{$id_balita}}" required class="hidden">
-                <input type="text" name="id_balita" value="{{$id_balita}}" required class="hidden">
-                <input type="text" name="nama_balita" value="{{$balita->nama_balita}}" required class="hidden">
+                {{-- <input type="text" name="id" value="{{$id_balita}}" required class="hidden"> --}}
+                <input type="text" name="id_balita" value="{{$balita->id_balita}}" required class="hidden">
+                {{-- <input type="text" name="nama_balita" value="{{$balita->nama_balita}}" required class="hidden">
                 <input type="text" name="nama_ortu" value="{{$balita->nama_ortu}}" required class="hidden">
                 <input type="date" name="tanggal_lahir" value={{$balita->tanggal_lahir}} required class="hidden">
                 <select name="lingkungan" required class="hidden">
@@ -117,8 +117,8 @@
                 <select name="jenis_kelamin" required class="hidden">
                     <option value="L" {{$balita->jenis_kelamin == 'L' ? 'selected' : ''}}>Laki-laki</option>
                     <option value="P" {{$balita->jenis_kelamin == 'P' ? 'selected' : ''}}>Perempuan</option>
-                </select> --}}
-               
+                </select>
+                --}}
 
                 {{-- <select name="is_stunting" required class="hidden">
                     <option value="Stunting" {{ $balita->is_stunting == 'Stunting' ? 'selected' : '' }}>Stunting</option>
@@ -143,6 +143,9 @@
                         <input value="{{$balita->berat_balita}}" type="number" step="0.1" name="berat_balita" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
 
                         <span class="ml-2 text-xl">kg</span>
+                        @error('berat_balita')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <br>
@@ -152,6 +155,9 @@
                         <input value="{{$balita->tinggi_balita}}" type="number" step="0.1" name="tinggi_balita" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
 
                         <span class="ml-2 text-xl">cm</span>
+                        @error('tinggi_balita')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div> <br>
                 <div>
@@ -159,6 +165,9 @@
                     <div class="flex items-center">
                         <input value="{{$balita->lingkar_kepala}}" type="number" step="0.1" name="lingkar_kepala" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
                         <span class="ml-2 text-xl">cm</span>
+                        @error('lingkar_kepala')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div> <br>
 
@@ -168,21 +177,28 @@
                     <div class="flex items-center">
                         <input value="{{$balita->lingkar_lengan}}" type="number" step="0.1" name="lingkar_lengan" class="mt-2 p-2 border rounded-lg w-24 focus:outline-[#f8bdc3] focus:translate-x-1 transition duration-300 ease-in-out" required>
                         <span class="ml-2 text-xl">cm</span>
+                        @error('lingkar_lengan')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div> <br>
 
                 <label for="vaksin" class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Vaksin/Obat Cacing:</label><br>
-                <select value="{{$balita->vaksin}}" name="vaksin" id="vaksin" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
-                    <option value="Tidak Diberikan">Tidak Diberikan</option>
-                    <option value="Vitamin A">Vitamin A</option>
-                    <option value="Obat Cacing">Obat Cacing</option>
+                <select name="vaksin" id="vaksin" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
+                    <option value="Tidak Diberikan" {{ $balita->vaksin == 'Tidak Diberikan' ? 'selected' : '' }}>Tidak Diberikan</option>
+                    <option value="Vitamin A" {{ $balita->vaksin == 'Vitamin A' ? 'selected' : '' }}>Vitamin A</option>
+                    <option value="Obat Cacing" {{ $balita->vaksin == 'Obat Cacing' ? 'selected' : '' }}>Obat Cacing</option>
                 </select> <br><br>
+
+                @error('vaksin')
+                            <span class="text-red-500 text-s">{{ $message }}</span>
+                @enderror
 
                 <div>
                     <h1 class="font-PlusJakartaSans laptopMid:text-4xl text-2xl">Imunisasi:</h1>
                     <div class="flex items-center">
                         <input value="{{$balita->imunisasi}}" type="text" name="imunisasi" required class="mt-2 p-2 border rounded-lg w-auto focus:outline-[#f8bdc3] focus:translate-x-2 transition duration-300 ease-in-out">
-                        @error('nama_balita')
+                        @error('imunisasi')
                             <span class="text-red-500 text-s">{{ $message }}</span>
                         @enderror
 

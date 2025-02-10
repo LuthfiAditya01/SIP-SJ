@@ -23,6 +23,8 @@ class DataPerkembanganBalita extends Model
         'tanggal_penimbangan' => 'date',
     ];
 
+    protected $guarded = [];
+
     // Pastikan ini tidak di-set ke false
-    public $timestamps = true;
+    // public $timestamps = true;
 }

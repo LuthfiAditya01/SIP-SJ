@@ -25,6 +25,9 @@ class User extends Authenticatable
         'lingkungan'  // <-- Tambahkan ini
     ];
 
+    protected $guarded = [];
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

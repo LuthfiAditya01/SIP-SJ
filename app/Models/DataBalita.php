@@ -22,6 +22,9 @@ class DataBalita extends Model
         'alamat',
         'have_kia'
     ];
+
+    protected $guarded = [];
+
     // protected $casts = [
     //     'tanggal_lahir' => 'date',
     // ];

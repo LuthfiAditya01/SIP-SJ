@@ -1,4 +1,4 @@
-# SIP-SJ (Sistem Informasi Posyandu - Stunting Jakarta) 🏥
+# SIP-SJ (Sistem Informasi Posyandu - Seputih Jaya) 🏥
 
 [![Laravel](https://img.shields.io/badge/Laravel-10.x-red.svg)](https://laravel.com)
 [![PHP](https://img.shields.io/badge/PHP-8.1+-blue.svg)](https://php.net)
@@ -7,7 +7,7 @@
 
 ## 📋 Deskripsi
 
-SIP-SJ adalah sistem informasi posyandu yang dirancang khusus untuk monitoring dan pencegahan stunting pada balita di Jakarta. Sistem ini memungkinkan kader dan bidan untuk mengelola data balita, memantau perkembangan, dan mengidentifikasi kasus stunting secara real-time.
+SIP-SJ adalah sistem informasi posyandu yang dirancang khusus untuk monitoring dan pencegahan stunting pada balita di Kelurahan Seputih Jaya, Kecamatan Gunung Sugih. Sistem ini memungkinkan kader dan bidan untuk mengelola data balita, memantau perkembangan, dan mengidentifikasi kasus stunting secara real-time.
 
 ## ✨ Fitur Utama
 
@@ -207,4 +207,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Made with ❤️ for Jakarta's children health monitoring**
+**Made with ❤️ for Seputih Jaya's children health monitoring**

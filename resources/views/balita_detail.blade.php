@@ -200,7 +200,8 @@
                                     <td class="py-4">
                                         {{ $data->imunisasi }}
                                     </td>
-                                    <td class="py-4 flex justify-evenly">
+                                    <td class="py-4 flex justify-around">
+                                        {{-- Tombol Edit --}}
                                         <a href="{{ route('perkembangan.edit', $data->id) }}" class=" p-2 hover:-translate-x-1 rounded-md bg-yellow-200 text-black hover:bg-white hover:text-black hover:outline-[#FAD4D8] hover:outline-double transition-all">Edit</a>
                                         {{-- Tombol Delete (pakai form) --}}
                                         <form action="{{ route('balita.destroy', $data->id) }}" method="POST" class="inline">

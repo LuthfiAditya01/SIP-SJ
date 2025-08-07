@@ -53,4 +53,13 @@ Route::middleware(['auth', 'role:kader,bidan'])->group(function(){
     Route::put('/perkembangan-total/{id}', [BalitaController::class, 'update'])->name('balita.update');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.create');
+    Route::post('/admin/store', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.store');
+    Route::get('/admin/{id}/edit', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.edit');
+    Route::put('/admin/{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.update');
+    Route::delete('/admin/{id}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.destroy');
+});
+
 require __DIR__.'/auth.php';

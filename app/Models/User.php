@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email', 
         'password', 
         'role',       // <-- Tambahkan ini
-        'lingkungan'  // <-- Tambahkan ini
+        'lingkungan',  // <-- Tambahkan ini
+        'is_verified'  // <-- Tambahkan ini untuk status verifikasi
     ];
 
     /**

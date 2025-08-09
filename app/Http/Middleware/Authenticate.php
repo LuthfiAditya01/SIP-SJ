@@ -20,7 +20,7 @@ class Authenticate extends Middleware
         if (auth()->check()) {
             $role = auth()->user()->role;
             return match ($role) {
-                'admin' => route('dashboard'),
+                'admin' => route('admin.index'),
                 'kader' => route('dashboard'),
                 'bidan' => route('dashboard'),
                 default => route('home'),

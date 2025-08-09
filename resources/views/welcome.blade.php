@@ -22,7 +22,11 @@
                 <div class="flex items-center space-x-3 md:space-x-6">
                     @if (Route::has('login'))
                         @auth
+                            @if (Auth::user()->role === 'admin')
+                                <a href="{{ route('admin.index') }}" class="text-gray-700 hover:text-gray-900 transition-colors">Admin Panel</a>
+                            @else
                             <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-gray-900 transition-colors">Dashboard</a>
+                            @endif
                         @else
                             <a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900 transition-colors">Login</a>
                             @if (Route::has('register'))

@@ -22,6 +22,12 @@ class DataBalita extends Model
         'alamat',
         'have_kia'
     ];
+
+    public function perkembangan()
+    {
+        return $this->hasMany(DataPerkembanganBalita::class, 'id_balita');
+    }
+
     // protected $casts = [
     //     'tanggal_lahir' => 'date',
     // ];

@@ -55,6 +55,26 @@ Route::middleware(['auth', 'role:kader,bidan'])->group(function(){
 
 Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+    
+    // User Management Routes
+    Route::get('/admin/users', [App\Http\Controllers\AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/users/create', [App\Http\Controllers\AdminController::class, 'createUser'])->name('admin.create-user');
+    Route::post('/admin/users', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.store-user');
+    Route::get('/admin/users/{id}/edit', [App\Http\Controllers\AdminController::class, 'editUser'])->name('admin.edit-user');
+    Route::put('/admin/users/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('admin.update-user');
+    Route::delete('/admin/users/{id}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.delete-user');
+    
+    // Balita Management Routes  
+    Route::get('/admin/balita', [App\Http\Controllers\AdminController::class, 'balita'])->name('admin.balita');
+    Route::get('/admin/balita/{id}', [App\Http\Controllers\AdminController::class, 'balitaDetail'])->name('admin.balita-detail');
+    
+    // Reports Routes
+    Route::get('/admin/reports', [App\Http\Controllers\AdminController::class, 'reports'])->name('admin.reports');
+    
+    // Settings Routes
+    Route::get('/admin/settings', [App\Http\Controllers\AdminController::class, 'settings'])->name('admin.settings');
+    
+    // Legacy routes (for backward compatibility)
     Route::get('/admin/create', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.create');
     Route::post('/admin/store', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.store');
     Route::get('/admin/{id}/edit', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.edit');
